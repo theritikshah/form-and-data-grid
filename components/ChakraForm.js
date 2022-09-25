@@ -8,6 +8,8 @@ import {
   Select,
 } from "@chakra-ui/react";
 
+import { useRouter } from "next/router";
+
 import { Formik, Form, Field, useFormik } from "formik";
 
 import * as Yup from "yup";
@@ -36,10 +38,12 @@ const validationSchema = Yup.object({
 });
 
 export default function ChakraForm() {
-  const formik = useFormik({
-    initialValues: { name: "" },
-    validationSchema,
-  });
+  const router = useRouter();
+
+  // const formik = useFormik({
+  //   initialValues: { name: "" },
+  //   validationSchema,
+  // });
 
   // function validateName(value) {
   //   let error;
@@ -54,18 +58,35 @@ export default function ChakraForm() {
   return (
     <div>
       <Formik
-        initialValues={{ name: "" }}
+        initialValues={{
+          name: "",
+          email: "",
+          age: "",
+          gender: "",
+          phone1: "",
+          phone2: "",
+          upload: "",
+        }}
         onSubmit={(values, actions) => {
-          actions.setSubmitting(false);
           formData.push(values);
           console.log(actions);
-          console.log(values);
-          actions.resetForm();
+          console.log(formData);
+          actions.resetForm({
+            name: "",
+            email: "",
+            age: "",
+            gender: "",
+            phone1: "",
+            phone2: "",
+            upload: "",
+          });
+          actions.setSubmitting(false);
+          router.push("/data");
         }}
       >
         {(props) => (
           <Form>
-            <Field name="namee" validate={validationSchema.name}>
+            <Field name="name" validate={validationSchema.name}>
               {({ field, form }) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
                   <FormLabel>First name</FormLabel>
@@ -75,20 +96,20 @@ export default function ChakraForm() {
               )}
             </Field>
 
-            <Field name="Age">
-              {({ field, form }) => (
-                <FormControl isInvalid={form.errors.name && form.touched.name}>
-                  <FormLabel>Age</FormLabel>
-                  <Input {...field} placeholder="Enter your age" />
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
             <Field name="email">
               {({ field, form }) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
                   <FormLabel>Email</FormLabel>
                   <Input {...field} placeholder="email" />
+                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                </FormControl>
+              )}
+            </Field>
+            <Field name="age">
+              {({ field, form }) => (
+                <FormControl isInvalid={form.errors.name && form.touched.name}>
+                  <FormLabel>Age</FormLabel>
+                  <Input {...field} placeholder="Enter your age" />
                   <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                 </FormControl>
               )}
@@ -104,7 +125,7 @@ export default function ChakraForm() {
                 </FormControl>
               )}
             </Field>
-            <Field name="Phone1">
+            <Field name="phone1">
               {({ field, form }) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
                   <FormLabel>Phone 1</FormLabel>
@@ -113,7 +134,7 @@ export default function ChakraForm() {
                 </FormControl>
               )}
             </Field>
-            <Field name="Phone2">
+            <Field name="phone2">
               {({ field, form }) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
                   <FormLabel>Phone 2</FormLabel>
@@ -122,7 +143,7 @@ export default function ChakraForm() {
                 </FormControl>
               )}
             </Field>
-            <Field name="Upload">
+            <Field name="file">
               {({ field, form }) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
                   <FormLabel>Upload File</FormLabel>

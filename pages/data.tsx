@@ -2,35 +2,13 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Button, Stack } from '@chakra-ui/react'
+import {formData} from '../components/ChakraForm'
 
 
 const Data = () => {
-
-    interface ContactDetails{
-        FirstName:String;
-        LastName: String;
-        Email: String;
-        Phone: Number;
-        PhoneOptional: Number;
-        Gender: String;
-        File: any;
-
-    }
-
-    const rowData: ContactDetails[] = [
-         {
-            FirstName: "Ritik",
-            LastName:"Jain",
-            Email: "ritikraw@gmail.com",
-            Phone: 8839992717,
-            PhoneOptional: 8839992717,
-            Gender: "Male",
-            File: ''
-
-        }
-    ];
+console.log("consoling from data page: "+ [...formData])
     const columnDefs = [
-        {field: 'FirstName'},
+        {field: 'Name'},
         {field: 'LastName'},
         {field: 'Email'},
         {field: 'Age'},
@@ -42,7 +20,7 @@ const Data = () => {
     
   return (
     <div>
-        <h1>Hello Ritik</h1>
+        {/* <h1>Hello Ritik</h1>
         <Stack direction='row' spacing={4} align='center'>
   <Button colorScheme='teal' variant='solid'>
     Button
@@ -62,7 +40,7 @@ const Data = () => {
         rowData={rowData}
         columnDefs={columnDefs}
         />
-    </div>
+    </div> */}
     </div>
   )
 }
