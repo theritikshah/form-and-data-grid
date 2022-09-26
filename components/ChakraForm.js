@@ -24,12 +24,14 @@ const validationSchema = Yup.object({
     .email("Enter a valid email address")
     .required("Email is required"),
   age: Yup.number()
-    .moreThan(20, "Age should be more than 18")
+    .moreThan(20, "Age should be more than 20")
     .lessThan(50, "Age shoud be under 50")
     .required("Age is required"),
-  phone1: Yup.number()
-    .min(10, "Number should be of 10 digit")
-    .max(10, "Number should be of 10 digit")
+  phone1: Yup.string()
+    .matches(/^[0-9]{10}$/, {
+      message: "Number should be of 10 digit",
+      excludeEmptyString: false,
+    })
     .required("Phone nnumber is required"),
   phone2: Yup.number()
     .min(10, "Number should be of 10 digit")
@@ -58,6 +60,7 @@ export default function ChakraForm() {
   return (
     <div>
       <Formik
+        validationSchema={validationSchema}
         initialValues={{
           name: "",
           email: "",
@@ -98,19 +101,21 @@ export default function ChakraForm() {
 
             <Field name="email">
               {({ field, form }) => (
-                <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormControl
+                  isInvalid={form.errors.email && form.touched.email}
+                >
                   <FormLabel>Email</FormLabel>
                   <Input {...field} placeholder="email" />
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                  <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
             <Field name="age">
               {({ field, form }) => (
-                <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormControl isInvalid={form.errors.age && form.touched.age}>
                   <FormLabel>Age</FormLabel>
                   <Input {...field} placeholder="Enter your age" />
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                  <FormErrorMessage>{form.errors.age}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
@@ -127,28 +132,32 @@ export default function ChakraForm() {
             </Field>
             <Field name="phone1">
               {({ field, form }) => (
-                <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormControl
+                  isInvalid={form.errors.phone1 && form.touched.phone1}
+                >
                   <FormLabel>Phone 1</FormLabel>
                   <Input {...field} placeholder="Enter phone number" />
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                  <FormErrorMessage>{form.errors.phone1}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
             <Field name="phone2">
               {({ field, form }) => (
-                <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormControl
+                  isInvalid={form.errors.phone2 && form.touched.phone2}
+                >
                   <FormLabel>Phone 2</FormLabel>
                   <Input {...field} placeholder="Enter second phone number" />
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                  <FormErrorMessage>{form.errors.phone2}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
             <Field name="file">
               {({ field, form }) => (
-                <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormControl isInvalid={form.errors.file && form.touched.file}>
                   <FormLabel>Upload File</FormLabel>
                   <input type="file"></input>
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                  <FormErrorMessage>{form.errors.file}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
